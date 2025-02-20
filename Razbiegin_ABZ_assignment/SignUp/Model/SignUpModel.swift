@@ -10,23 +10,23 @@ import Foundation
 // api url: https://frontend-test-assignment-api.abz.agency/api/v1
 
 enum SignUpUserErrorCode {
-  case custom(Int)
-  case success, unauthorized, conflict, unprocessableContent
+    case custom(Int)
+    case success, unauthorized, conflict, unprocessableContent
 
-  var value: Int {
-    switch self {
-    case .success:
-      return 201
-    case .unauthorized:
-      return 401
-    case .conflict:
-      return 409
-    case .unprocessableContent:
-      return 422
-    case .custom(let customValue):
-      return customValue
+    var value: Int {
+        switch self {
+        case .success:
+            return 201
+        case .unauthorized:
+            return 401
+        case .conflict:
+            return 409
+        case .unprocessableContent:
+            return 422
+        case .custom(let customValue):
+            return customValue
+        }
     }
-  }
 }
 
 struct SignUpUserParam: Codable {
