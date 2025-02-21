@@ -67,3 +67,5 @@ struct User: Codable {
     let registration_timestamp: String
     let photo: String
 }
+
+// TODO: Create user entity mapped to view

@@ -6,5 +6,36 @@
 //
 
 import Foundation
+import SwiftUI
 
-// TODO: Place Users related logic here
+class UsersViewModel {
+
+    enum UsersViewState {
+        case loaded([User])
+        case loading
+        case loadingError(Error)
+    }
+
+    @Published var viewState: UsersViewState
+
+    var networkManager: NetworkManager
+
+    init(manager: NetworkManager) {
+        self.networkManager = manager
+        self.viewState = .loading
+    }
+
+    func getUsers() {
+        self.viewState = .loading
+        networkManager.getUsers { [weak self] result in
+            switch result {
+                case .success(let response):
+                    self?.viewState = .loaded(response.users)
+                case .failure(let error):
+                    print(error)
+                    self?.viewState = .loadingError(error)
+                    // handle error
+            }
+        }
+    }
+}

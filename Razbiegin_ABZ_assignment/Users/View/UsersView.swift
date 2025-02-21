@@ -9,3 +9,15 @@ import Foundation
 import SwiftUI
 
 // TODO: Place Users view here
+struct UsersView: View {
+
+    @State var viewModel: UsersViewModel
+
+    init(viewModel: UsersViewModel) {
+        self.viewModel = viewModel
+    }
+
+    var body: some View {
+        Text("foo")
+    }
+}
