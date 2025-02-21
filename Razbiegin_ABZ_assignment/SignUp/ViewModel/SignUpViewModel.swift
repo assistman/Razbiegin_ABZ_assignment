@@ -23,17 +23,21 @@ class SignUpViewModel {
     init(manager: NetworkManager) {
         self.networkManager = manager
         self.viewState = .loading
+        let user = SignUpUserParam(name: "John", email: "email@razbegin.com", phone: "+380964034443", position_id: 1, photo: "")
+        createUser(user: user)
     }
 
     func createUser(user: SignUpUserParam) {
         self.viewState = .loading
-//        self.networkManager.createUser(user: user) { [weak self] result in
-//            switch(result) {
-//                case .success(_):
-//                    self?.viewState = .loaded
-//                case .failure(let error):
-//                    self?.viewState = .loadingError(error)
-//            }
-//        }
+        Task {
+            do {
+                let token = try await networkManager.getToken()
+                print("Token is: \(token.token)")
+                try await networkManager.createUser(user: user)
+                self.viewState = .loaded
+            } catch {
+                self.viewState = .loadingError(error)
+            }
+        }
     }
 }

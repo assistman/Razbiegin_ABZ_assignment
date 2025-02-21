@@ -10,7 +10,9 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-            UsersView(viewModel: UsersViewModel(manager: NetworkManager()))
+//            UsersView(viewModel: UsersViewModel(manager: NetworkManager()))
+            SignUpView(viewModel: SignUpViewModel(manager: NetworkManager()))
+
         }
         .padding()
     }

@@ -7,8 +7,6 @@
 
 import Foundation
 
-// api url: https://frontend-test-assignment-api.abz.agency/api/v1
-
 enum SignUpUserErrorCode {
     case custom(Int)
     case success, unauthorized, conflict, unprocessableContent
@@ -29,6 +27,24 @@ enum SignUpUserErrorCode {
     }
 }
 
+/*
+ {
+   "success": true,
+   "user_id": 25794,
+   "message": "New user successfully registered"
+ }
+ */
+struct SignUpResponse: Codable {
+    let success: Bool
+    let user_id: Int
+    let message: String
+}
+
+struct TokenResponse: Codable {
+    let token: String
+    let success: Bool
+}
+
 struct SignUpUserParam: Codable {
     let name: String
     let email: String
@@ -36,4 +52,3 @@ struct SignUpUserParam: Codable {
     let position_id: Int
     let photo: String
 }
-
