@@ -23,18 +23,17 @@ class UsersViewModel {
     init(manager: NetworkManager) {
         self.networkManager = manager
         self.viewState = .loading
+        getUsers()
     }
 
     func getUsers() {
         self.viewState = .loading
-        networkManager.getUsers { [weak self] result in
-            switch result {
-                case .success(let response):
-                    self?.viewState = .loaded(response.users)
-                case .failure(let error):
-                    print(error)
-                    self?.viewState = .loadingError(error)
-                    // handle error
+        Task {
+            do {
+                let response = try await networkManager.getUsers(page: 1, count: 5)
+                self.viewState = .loaded(response.users)
+            } catch {
+                self.viewState = .loadingError(error)
             }
         }
     }

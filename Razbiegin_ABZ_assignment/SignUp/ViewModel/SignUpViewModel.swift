@@ -27,13 +27,13 @@ class SignUpViewModel {
 
     func createUser(user: SignUpUserParam) {
         self.viewState = .loading
-        self.networkManager.createUser(user: user) { [weak self] result in
-            switch(result) {
-                case .success(_):
-                    self?.viewState = .loaded
-                case .failure(let error):
-                    self?.viewState = .loadingError(error)
-            }
-        }
+//        self.networkManager.createUser(user: user) { [weak self] result in
+//            switch(result) {
+//                case .success(_):
+//                    self?.viewState = .loaded
+//                case .failure(let error):
+//                    self?.viewState = .loadingError(error)
+//            }
+//        }
     }
 }

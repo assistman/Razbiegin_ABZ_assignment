@@ -18,6 +18,6 @@ struct UsersView: View {
     }
 
     var body: some View {
-        Text("foo")
+        Text("Hello ;)")
     }
 }

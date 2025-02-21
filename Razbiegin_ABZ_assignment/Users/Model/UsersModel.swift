@@ -10,21 +10,21 @@ import Foundation
 // api url: https://frontend-test-assignment-api.abz.agency/api/v1
 
 enum GetUsersErrorCode {
-  case custom(Int)
-  case success, notFound, unprocessableContent
+    case custom(Int)
+    case success, notFound, unprocessableContent
 
-  var value: Int {
+    var value: Int {
     switch self {
-    case .success:
-      return 200
-    case .notFound:
-      return 404
-    case .unprocessableContent:
-      return 422
-    case .custom(let customValue):
-      return customValue
+        case .success:
+            return 200
+        case .notFound:
+            return 404
+        case .unprocessableContent:
+            return 422
+        case .custom(let customValue):
+            return customValue
+        }
     }
-  }
 }
 
 struct UsersResponse: Codable {
@@ -64,7 +64,7 @@ struct User: Codable {
     let phone: String
     let position: String
     let position_id: Int
-    let registration_timestamp: String
+    let registration_timestamp: Int
     let photo: String
 }
 
