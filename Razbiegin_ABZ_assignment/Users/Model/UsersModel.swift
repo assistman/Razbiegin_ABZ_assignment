@@ -60,12 +60,13 @@ struct Links: Codable {
  */
 struct User: Codable {
     let id: Int
+    let name: String
     let email: String
     let phone: String
     let position: String
     let position_id: Int
     let registration_timestamp: Int
-    let photo: String
+    let photo: String // this is url string
 }
 
 // TODO: Create user entity mapped to view
