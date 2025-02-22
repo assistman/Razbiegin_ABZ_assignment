@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class UsersViewModel {
+class UsersViewModel: ObservableObject {
 
     enum UsersViewState {
         case loaded([User])
@@ -31,7 +31,9 @@ class UsersViewModel {
         Task {
             do {
                 let response = try await networkManager.getUsers(page: 1, count: 5)
-                self.viewState = .loaded(response.users)
+                await MainActor.run {
+                    self.viewState = .loaded(response.users)
+                }
             } catch {
                 self.viewState = .loadingError(error)
             }

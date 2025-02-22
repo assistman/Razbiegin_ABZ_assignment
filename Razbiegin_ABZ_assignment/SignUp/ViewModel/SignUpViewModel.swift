@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 // TODO: Place SignUP related logic here
 class SignUpViewModel {
@@ -23,7 +24,13 @@ class SignUpViewModel {
     init(manager: NetworkManager) {
         self.networkManager = manager
         self.viewState = .loading
-        let user = SignUpUserParam(name: "John", email: "email@razbegin.com", phone: "+380964034443", position_id: 1, photo: "")
+        let image = UIImage(named: "imagetest")
+        guard let imageData = image?.jpegData(compressionQuality: 0.8) else {
+            return
+        }
+        let imageDataString = imageData.base64EncodedString()
+        print(imageDataString)
+        let user = SignUpUserParam(name: "John", email: "email@razbegin.com", phone: "+380964034443", position_id: 1, photo: imageDataString)
         createUser(user: user)
     }
 

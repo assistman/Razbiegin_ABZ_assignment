@@ -53,8 +53,10 @@ class NetworkManager {
             "email": user.email,
             "phone": user.phone,
             "position_id": user.position_id,
-            "photo": user.phone // TODO: Check for the value type!
+            "photo": user.photo // TODO: Check for the value type!
         ]
+        // Create create user request and fill it with token
+        // Move request creation up on level
         let responseData = try await fetchRemoteData(url: url, method: HTTPMethod.POST.rawValue, parameters: parameters)
     }
 
@@ -89,6 +91,8 @@ class NetworkManager {
         var request = URLRequest(url: url)
         request.httpMethod = method
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("token here", forHTTPHeaderField: "Token")
+
         if let parameters = parameters {
             request.httpBody = try JSONSerialization.data(withJSONObject: parameters)
         }

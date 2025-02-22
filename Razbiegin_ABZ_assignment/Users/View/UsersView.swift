@@ -10,7 +10,7 @@ import SwiftUI
 
 struct UsersView: View {
 
-    @State var viewModel: UsersViewModel
+    @ObservedObject var viewModel: UsersViewModel
 
     init(viewModel: UsersViewModel) {
         self.viewModel = viewModel
@@ -18,9 +18,21 @@ struct UsersView: View {
 
     var body: some View {
         HeaderView()
-        Text("Hello ;)")
+        ZStack {
+            switch viewModel.viewState {
+                case .loaded(let users):
+                    loadedView(users: users)
+                default:
+                    Text("No users")
+            }
+        }
+    }
+
+    func loadedView(users: [User]) -> some View {
         List {
-            // Handle view state, fill with UserViews
+            ForEach(users) { user in
+                UserView(user: user)
+            }
         }
     }
 }
@@ -89,7 +101,7 @@ struct UserDetailsView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(user.name)
-                .font(.largeTitle)
+                .font(.title)
                 .foregroundStyle(.primary)
             Text(user.position)
                 .foregroundStyle(.secondary)

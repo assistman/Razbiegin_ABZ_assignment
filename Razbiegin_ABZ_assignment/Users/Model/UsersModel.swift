@@ -58,7 +58,8 @@ struct Links: Codable {
  "registration_timestamp": 1537639019,
  "photo": "https://frontend-test-assignment-api.abz.agency/images/users/5b977ba20bd9537.jpeg"
  */
-struct User: Codable {
+// TODO: Create separate user entity mapped to view
+struct User: Codable, Identifiable {
     let id: Int
     let name: String
     let email: String
@@ -68,5 +69,3 @@ struct User: Codable {
     let registration_timestamp: Int
     let photo: String // this is url string
 }
-
-// TODO: Create user entity mapped to view
