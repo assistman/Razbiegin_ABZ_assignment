@@ -16,16 +16,21 @@ struct UsersView: View {
         self.viewModel = viewModel
     }
 
+//        .background(Color(hex: "F4E041"))
+
     var body: some View {
-        HeaderView()
-            .frame(maxWidth: .infinity)
-        ZStack {
-            switch viewModel.viewState {
-                case .loaded(let users):
-                    loadedView(users: users)
-                default:
-                    Text("No users")
+        VStack {
+            HeaderView()
+            ZStack {
+                switch viewModel.viewState {
+                    case .loaded(let users):
+                        loadedView(users: users)
+                    default:
+                        Text("No users")
+                }
             }
+            .listStyle(.plain)
+            .frame(maxWidth: .infinity)
         }
     }
 
@@ -33,6 +38,7 @@ struct UsersView: View {
         List {
             ForEach(users) { user in
                 UserView(user: user)
+
             }
         }
     }
@@ -43,7 +49,10 @@ struct HeaderView: View {
     var body: some View {
         Text("Working with GET request")
             .font(.headline)
-        .background(Color(hex: "F4E041"))
+            .padding(16)
+//            .background(Color(hex: "F4E041"))
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 56)
+            .background(Color(hex: "F4E041"))
     }
 }
 
@@ -51,7 +60,7 @@ struct UserView: View {
     var user: User
 
     var body: some View {
-        HStack {
+        HStack(alignment: .top) {
             ProfilePicture(imageUrl: user.photo)
             UserDetailsView(user: user)
         }
@@ -76,38 +85,19 @@ struct ProfilePicture: View {
     }
 }
 
-struct EmailAddressView: View {
-    var emailAddress: String
-
-    var body: some View {
-        HStack {
-            Image(systemName: "envelope")
-            Text(emailAddress)
-        }
-    }
-}
-
-struct PhoneView: View {
-    var phone: String
-
-    var body: some View {
-        HStack {
-            Text(phone)
-        }
-    }
-}
-
 struct UserDetailsView: View {
     var user: User
     var body: some View {
         VStack(alignment: .leading) {
             Text(user.name)
                 .font(.title)
-                .foregroundStyle(.primary)
             Text(user.position)
                 .foregroundStyle(.secondary)
-            EmailAddressView(emailAddress: user.email) // Consider removing extra view wrappers
-            PhoneView(phone: user.phone)
+                .padding(4)
+            Text(user.email)
+                .padding(4)
+            Text(user.phone)
+                .padding(4)
         }
     }
 }
@@ -138,5 +128,11 @@ extension Color {
             blue:  Double(b) / 255,
             opacity: Double(a) / 255
         )
+    }
+}
+
+struct UsersView_Previews: PreviewProvider {
+    static var previews: some View {
+        UsersView(viewModel: UsersViewModel(manager: NetworkManager()))
     }
 }
