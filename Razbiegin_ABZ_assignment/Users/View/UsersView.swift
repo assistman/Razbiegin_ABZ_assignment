@@ -18,6 +18,7 @@ struct UsersView: View {
 
     var body: some View {
         HeaderView()
+            .frame(maxWidth: .infinity)
         ZStack {
             switch viewModel.viewState {
                 case .loaded(let users):

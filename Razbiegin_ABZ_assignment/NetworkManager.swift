@@ -15,6 +15,7 @@ enum HTTPMethod: String {
 
 enum NetworkError: Error {
     case badUrl
+    case emptyToken
 }
 
 class NetworkManager {
@@ -23,15 +24,15 @@ class NetworkManager {
     private let tokenUrl = "https://frontend-test-assignment-api.abz.agency/api/v1/token"
     var token: String?
 
-    func getToken() async throws -> TokenResponse {
-        let endpoint = tokenUrl
-        guard let url = URL(string: endpoint) else {
-            throw NetworkError.badUrl
+    func getTokenString() async throws -> String {
+        if let token = self.token {
+            return token
         }
-        let responseData = try await fetchRemoteData(url: url, method: HTTPMethod.GET.rawValue, parameters: nil)
+        let request = try buildTokenRequest()
+        let responseData = try await fetchRemoteData(request: request)
         let tokenResponse = try decodeTokenResponse(responseData)
         self.token = tokenResponse.token
-        return tokenResponse
+        return self.token ?? ""
     }
 
     func getUsers(page: Int, count: Int) async throws -> UsersResponse {
@@ -39,39 +40,69 @@ class NetworkManager {
         guard let url = URL(string: endpoint) else {
             throw NetworkError.badUrl
         }
-        let responseData = try await fetchRemoteData(url: url, method: HTTPMethod.GET.rawValue, parameters: nil)
+        let request = buildGetUsersRequest(url: url)
+        let responseData = try await fetchRemoteData(request: request)
         return try decodeUsersResponse(responseData)
     }
 
     func createUser(user: SignUpUserParam) async throws -> Void {
-        let endpoint = usersUrl
-        guard let url = URL(string: endpoint) else {
-            throw NetworkError.badUrl
-        }
         let parameters: [String: Any] = [
             "name": user.name,
             "email": user.email,
             "phone": user.phone,
             "position_id": user.position_id,
-            "photo": user.photo // TODO: Check for the value type!
+            "photo": user.photo
         ]
-        // Create create user request and fill it with token
-        // Move request creation up on level
-        let responseData = try await fetchRemoteData(url: url, method: HTTPMethod.POST.rawValue, parameters: parameters)
+        let request = try buildCreateUserRequest(parameters: parameters)
+        let response = try await fetchRemoteData(request: request)
+        print(response)
     }
 
-    private func sendRequest( _ request: URLRequest) async throws -> Data {
-        let (responseData, _) = try await URLSession.shared.data(for: request)
-        return responseData
+    func buildTokenRequest() throws -> URLRequest {
+        guard let url = URL(string: self.tokenUrl) else {
+            throw NetworkError.badUrl
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = HTTPMethod.GET.rawValue
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        return request
     }
 
-    private func fetchRemoteData(url: URL, method: String, parameters: [String: Any]?) async throws -> Data {
-        let request = try buildRequest(url: url, method: method, parameters: parameters)
+    func buildGetUsersRequest(url: URL) -> URLRequest {
+        var request = URLRequest(url: url)
+        request.httpMethod = HTTPMethod.GET.rawValue
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        return request
+    }
+
+    func buildCreateUserRequest(parameters: [String: Any]) throws -> URLRequest {
+        guard let url = URL(string: self.usersUrl) else {
+            throw NetworkError.badUrl
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = HTTPMethod.POST.rawValue
+        request.addValue("multipart/form-data", forHTTPHeaderField: "Content-Type")
+        guard let token = self.token else {
+            // handle token request here
+            throw NetworkError.emptyToken
+        }
+        request.addValue(token, forHTTPHeaderField: "Token")
+        request.httpBody = try JSONSerialization.data(withJSONObject: parameters)
+
+        return request
+    }
+
+    private func fetchRemoteData(request: URLRequest) async throws -> Data {
         let data = try await sendRequest(request) // TODO: Handle network errors(e.g. expired token) on the network manager layer!
         // Just for test purposes
         let jsonDict = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]
         print("\njson dict: \n\(jsonDict)\n")
         return data
+    }
+
+    private func sendRequest( _ request: URLRequest) async throws -> Data {
+        let (responseData, _) = try await URLSession.shared.data(for: request)
+        return responseData
     }
 
     private func decodeTokenResponse(_ data: Data) throws -> TokenResponse {
@@ -85,18 +116,4 @@ class NetworkManager {
     private func decodeSignUpResponse(_ data: Data) throws -> SignUpResponse {
         try JSONDecoder().decode(SignUpResponse.self, from: data)
     }
-
-    // TODO: Decompose this since create user has another request
-    private func buildRequest(url: URL, method: String, parameters: [String: Any]?) throws -> URLRequest {
-        var request = URLRequest(url: url)
-        request.httpMethod = method
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("token here", forHTTPHeaderField: "Token")
-
-        if let parameters = parameters {
-            request.httpBody = try JSONSerialization.data(withJSONObject: parameters)
-        }
-        return request
-    }
-
 }

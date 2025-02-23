@@ -38,8 +38,8 @@ class SignUpViewModel {
         self.viewState = .loading
         Task {
             do {
-                let token = try await networkManager.getToken()
-                print("Token is: \(token.token)")
+                let token = try await networkManager.getTokenString()
+                print("Token is: \(token)")
                 try await networkManager.createUser(user: user)
                 self.viewState = .loaded
             } catch {
