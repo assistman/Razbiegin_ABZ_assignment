@@ -16,21 +16,13 @@ struct UsersView: View {
         self.viewModel = viewModel
     }
 
-//        .background(Color(hex: "F4E041"))
-
     var body: some View {
-        VStack {
-            HeaderView()
-            ZStack {
-                switch viewModel.viewState {
-                    case .loaded(let users):
-                        loadedView(users: users)
-                    default:
-                        Text("No users")
-                }
-            }
-            .listStyle(.plain)
-            .frame(maxWidth: .infinity)
+        HeaderView()
+        switch viewModel.viewState {
+            case .loaded(let users):
+                loadedView(users: users)
+            default:
+                EmptyView()
         }
     }
 
@@ -38,9 +30,11 @@ struct UsersView: View {
         List {
             ForEach(users) { user in
                 UserView(user: user)
-
             }
         }
+        .listStyle(.plain)
+        .frame(maxWidth: .infinity)
+
     }
 }
 
@@ -50,9 +44,19 @@ struct HeaderView: View {
         Text("Working with GET request")
             .font(.headline)
             .padding(16)
-//            .background(Color(hex: "F4E041"))
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 56)
             .background(Color(hex: "F4E041"))
+            .frame(maxWidth: .infinity, maxHeight: 60)
+    }
+}
+
+struct EmptyView: View {
+
+    var body: some View {
+        VStack {
+            Image("success-image")
+            Text("There are no users yet")
+                .font(.title)
+        }
     }
 }
 
