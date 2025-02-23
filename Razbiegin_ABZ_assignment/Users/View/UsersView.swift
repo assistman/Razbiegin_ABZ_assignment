@@ -17,12 +17,16 @@ struct UsersView: View {
     }
 
     var body: some View {
-        HeaderView()
-        switch viewModel.viewState {
-            case .loaded(let users):
-                loadedView(users: users)
-            default:
-                EmptyView()
+        VStack {
+            HeaderView()
+                .background(Color(hex: "F4E041"))
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 60)
+            switch viewModel.viewState {
+                case .loaded(let users):
+                    loadedView(users: users)
+                default:
+                    EmptyView()
+            }
         }
     }
 
@@ -44,8 +48,6 @@ struct HeaderView: View {
         Text("Working with GET request")
             .font(.headline)
             .padding(16)
-            .background(Color(hex: "F4E041"))
-            .frame(maxWidth: .infinity, maxHeight: 60)
     }
 }
 
