@@ -17,9 +17,8 @@ struct UsersView: View {
     }
 
     var body: some View {
-        
         VStack {
-            HeaderView()
+            HeaderView(text: "Working with GET request")
             switch viewModel.viewState {
                 case .loaded(let content):
                     loadedView(content: content)
@@ -55,16 +54,6 @@ struct UsersView: View {
         }
         .listStyle(.plain)
         .frame(maxWidth: .infinity)
-
-    }
-}
-
-struct HeaderView: View {
-
-    var body: some View {
-        Text("Working with GET request")
-            .font(.headline)
-            .padding(16)
     }
 }
 
@@ -72,7 +61,7 @@ struct EmptyView: View {
 
     var body: some View {
         VStack {
-            Image("success-image")
+            Image("no_users")
             Text("There are no users yet")
                 .font(.title)
         }
@@ -147,7 +136,7 @@ struct UserDetailsView: View {
                 .padding(4)
             Text(user.email)
                 .padding(4)
-            Text(user.phone)
+            Text(PhoneFormatter.formatPhone(number: user.phone))
                 .padding(4)
         }
     }

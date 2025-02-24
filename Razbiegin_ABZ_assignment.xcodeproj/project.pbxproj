@@ -20,6 +20,7 @@
 		F59A5B502D6777C7002EDB02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F59A5B4F2D6777C7002EDB02 /* Assets.xcassets */; };
 		F59A5B532D6777C7002EDB02 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F59A5B522D6777C7002EDB02 /* Preview Assets.xcassets */; };
 		F5F2A41A2D6CA3760093B848 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F2A4192D6CA3760093B848 /* Utility.swift */; };
+		F5F2A41C2D6CE69A0093B848 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F2A41B2D6CE69A0093B848 /* HeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		F59A5B4F2D6777C7002EDB02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F59A5B522D6777C7002EDB02 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F5F2A4192D6CA3760093B848 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		F5F2A41B2D6CE69A0093B848 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +147,7 @@
 				F5275C832D677E8200B34A8D /* SignUp */,
 				F5275C842D677E8C00B34A8D /* Users */,
 				F5275C972D67C7DF00B34A8D /* NetworkManager.swift */,
+				F5F2A41B2D6CE69A0093B848 /* HeaderView.swift */,
 				F5F2A4192D6CA3760093B848 /* Utility.swift */,
 			);
 			path = Razbiegin_ABZ_assignment;
@@ -235,6 +238,7 @@
 				F5275C922D677F9B00B34A8D /* UsersModel.swift in Sources */,
 				F5275C8C2D677F1F00B34A8D /* SignUpViewModel.swift in Sources */,
 				F59A5B4C2D6777C5002EDB02 /* Razbiegin_ABZ_assignmentApp.swift in Sources */,
+				F5F2A41C2D6CE69A0093B848 /* HeaderView.swift in Sources */,
 				F5275C962D677FBE00B34A8D /* UsersViewModel.swift in Sources */,
 				F57A53902D6C9FC800528DEB /* ResultView.swift in Sources */,
 				F5275C942D677FA800B34A8D /* UsersView.swift in Sources */,

@@ -52,3 +52,14 @@ struct SignUpUserParam: Codable {
     let position_id: Int
     let photo: String
 }
+
+struct PhoneFormatter {
+
+    static func formatPhone(number: String) -> String {
+        if number.count != 13 {
+            return "Invalid phone number format"
+        }
+        let formatted = "\(number[0...2]) (\(number[3...5])) \(number[6...8]) - \(number[9...10]) - \(number[11...12])"
+        return formatted
+    }
+}

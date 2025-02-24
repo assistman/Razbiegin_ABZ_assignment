@@ -25,10 +25,9 @@ class UsersViewModel: ObservableObject {
             }
             return false
         }
-
     }
 
-    let pageItemsCount = 6
+    let pageItemsCount = 5
 
     struct ModelState {
 
