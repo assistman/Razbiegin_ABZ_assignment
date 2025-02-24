@@ -37,6 +37,7 @@ class NetworkManager {
 
     func getUsers(page: Int, count: Int) async throws -> UsersResponse {
         let endpoint = usersUrl + "?page=\(page)&count=\(count)" // TODO: Use URLComponents
+        print("endpoint: \(endpoint)")
         guard let url = URL(string: endpoint) else {
             throw NetworkError.badUrl
         }

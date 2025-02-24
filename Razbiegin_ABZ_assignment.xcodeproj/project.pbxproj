@@ -14,6 +14,7 @@
 		F5275C942D677FA800B34A8D /* UsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5275C932D677FA800B34A8D /* UsersView.swift */; };
 		F5275C962D677FBE00B34A8D /* UsersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5275C952D677FBE00B34A8D /* UsersViewModel.swift */; };
 		F5275C982D67C7E000B34A8D /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5275C972D67C7DF00B34A8D /* NetworkManager.swift */; };
+		F57A53902D6C9FC800528DEB /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57A538F2D6C9FC800528DEB /* ResultView.swift */; };
 		F59A5B4C2D6777C5002EDB02 /* Razbiegin_ABZ_assignmentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59A5B4B2D6777C5002EDB02 /* Razbiegin_ABZ_assignmentApp.swift */; };
 		F59A5B4E2D6777C5002EDB02 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59A5B4D2D6777C5002EDB02 /* ContentView.swift */; };
 		F59A5B502D6777C7002EDB02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F59A5B4F2D6777C7002EDB02 /* Assets.xcassets */; };
@@ -28,6 +29,7 @@
 		F5275C932D677FA800B34A8D /* UsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersView.swift; sourceTree = "<group>"; };
 		F5275C952D677FBE00B34A8D /* UsersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewModel.swift; sourceTree = "<group>"; };
 		F5275C972D67C7DF00B34A8D /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		F57A538F2D6C9FC800528DEB /* ResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		F59A5B482D6777C5002EDB02 /* Razbiegin_ABZ_assignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Razbiegin_ABZ_assignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F59A5B4B2D6777C5002EDB02 /* Razbiegin_ABZ_assignmentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Razbiegin_ABZ_assignmentApp.swift; sourceTree = "<group>"; };
 		F59A5B4D2D6777C5002EDB02 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 		F5275C852D677EE500B34A8D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F57A538F2D6C9FC800528DEB /* ResultView.swift */,
 				F5275C932D677FA800B34A8D /* UsersView.swift */,
 			);
 			path = View;
@@ -229,6 +232,7 @@
 				F5275C8C2D677F1F00B34A8D /* SignUpViewModel.swift in Sources */,
 				F59A5B4C2D6777C5002EDB02 /* Razbiegin_ABZ_assignmentApp.swift in Sources */,
 				F5275C962D677FBE00B34A8D /* UsersViewModel.swift in Sources */,
+				F57A53902D6C9FC800528DEB /* ResultView.swift in Sources */,
 				F5275C942D677FA800B34A8D /* UsersView.swift in Sources */,
 				F5275C8E2D677F5800B34A8D /* SignUpModel.swift in Sources */,
 			);

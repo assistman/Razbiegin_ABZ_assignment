@@ -15,7 +15,6 @@ struct UsersView: View {
     init(viewModel: UsersViewModel) {
         self.viewModel = viewModel
     }
-
 //        .background(Color(hex: "F4E041"))
 
     var body: some View {
@@ -23,8 +22,8 @@ struct UsersView: View {
             HeaderView()
             ZStack {
                 switch viewModel.viewState {
-                    case .loaded(let users):
-                        loadedView(users: users)
+                    case .loaded(let content):
+                        loadedView(content: content)
                     default:
                         Text("No users")
                 }
@@ -32,13 +31,29 @@ struct UsersView: View {
             .listStyle(.plain)
             .frame(maxWidth: .infinity)
         }
+        .fullScreenCover(isPresented: .constant(viewModel.viewState.isError)) {
+            ResultView(
+                imageName: "no_connection",
+                text: "There is no internet connection",
+                buttonTitle: "Try again",
+                action: { viewModel.getUsers() }
+            )
+        }
     }
 
-    func loadedView(users: [User]) -> some View {
-        List {
-            ForEach(users) { user in
-                UserView(user: user)
-
+    func loadedView(
+        content: UsersViewModel.ViewState.LoadedContent
+    ) -> some View {
+        ScrollView {
+            LazyVStack {
+                ForEach(content.users) { user in
+                    UserView(user: user)
+                }
+                if content.canLoadMore {
+                    LoadingNextPageView().onAppear {
+                        viewModel.getUsers()
+                    }
+                }
             }
         }
     }
@@ -64,6 +79,33 @@ struct UserView: View {
             ProfilePicture(imageUrl: user.photo)
             UserDetailsView(user: user)
         }
+    }
+}
+
+struct LoadingNextPageView: View {
+
+    var body: some View {
+        ProgressView()
+            .progressViewStyle(CircularProgressViewStyle())
+            .padding(16)
+    }
+}
+
+struct SheetView: View {
+   @Environment(\.dismiss) var dismiss
+
+    var body: some View {
+        ZStack {
+           Button {
+              dismiss()
+           } label: {
+               Image(systemName: "xmark.circle")
+                 .font(.largeTitle)
+                 .foregroundColor(.gray)
+           }
+         }
+         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+         .padding()
     }
 }
 
@@ -133,6 +175,8 @@ extension Color {
 
 struct UsersView_Previews: PreviewProvider {
     static var previews: some View {
-        UsersView(viewModel: UsersViewModel(manager: NetworkManager()))
+        UsersView(viewModel: UsersViewModel(
+            manager: NetworkManager()
+        ))
     }
 }
