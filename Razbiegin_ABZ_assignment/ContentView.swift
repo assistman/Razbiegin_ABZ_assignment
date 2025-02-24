@@ -41,7 +41,7 @@ struct ContentView: View {
             case .loading:
                 Image("Logo")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.yellow)
+                .background(Color("normal"))
             case .loaded:
                 TabView {
                     UsersView(viewModel: UsersViewModel(

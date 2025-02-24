@@ -11,7 +11,9 @@ import SwiftUI
 struct Razbiegin_ABZ_assignmentApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(viewModel: ContentViewModel(networkManager: NetworkManager()))
+            ContentView(viewModel: ContentViewModel(
+                networkManager: NetworkManager()
+            ))
         }
     }
 }

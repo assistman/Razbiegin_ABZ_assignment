@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 
-// TODO: Place SignUP related logic here
 class SignUpViewModel {
 
     enum SignUpViewState {
