@@ -20,13 +20,11 @@ struct UsersView: View {
         
         VStack {
             HeaderView()
-            ZStack {
-                switch viewModel.viewState {
-                    case .loaded(let content):
-                        loadedView(content: content)
-                    default:
-                        Text("No users")
-                }
+            switch viewModel.viewState {
+                case .loaded(let content):
+                    loadedView(content: content)
+                default:
+                    Text("No users")
             }
         }
         .fullScreenCover(isPresented: .constant(viewModel.viewState.isError)) {
@@ -43,9 +41,10 @@ struct UsersView: View {
         content: UsersViewModel.ViewState.LoadedContent
     ) -> some View {
         ScrollView {
-            LazyVStack {
+            LazyVStack(alignment: .leading) {
                 ForEach(content.users) { user in
                     UserView(user: user)
+                        .padding(.horizontal, 16)
                 }
                 if content.canLoadMore {
                     LoadingNextPageView().onAppear {
@@ -97,6 +96,7 @@ struct LoadingNextPageView: View {
         ProgressView()
             .progressViewStyle(CircularProgressViewStyle())
             .padding(16)
+            .frame(maxWidth: .infinity)
     }
 }
 
