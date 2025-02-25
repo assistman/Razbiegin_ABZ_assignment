@@ -21,6 +21,7 @@
 		F59A5B532D6777C7002EDB02 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F59A5B522D6777C7002EDB02 /* Preview Assets.xcassets */; };
 		F5F2A41A2D6CA3760093B848 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F2A4192D6CA3760093B848 /* Utility.swift */; };
 		F5F2A41C2D6CE69A0093B848 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F2A41B2D6CE69A0093B848 /* HeaderView.swift */; };
+		F5F2A4222D6E14930093B848 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F2A4212D6E14930093B848 /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		F59A5B522D6777C7002EDB02 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F5F2A4192D6CA3760093B848 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		F5F2A41B2D6CE69A0093B848 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		F5F2A4212D6E14930093B848 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 				F5275C832D677E8200B34A8D /* SignUp */,
 				F5275C842D677E8C00B34A8D /* Users */,
 				F5275C972D67C7DF00B34A8D /* NetworkManager.swift */,
+				F5F2A4212D6E14930093B848 /* ImagePicker.swift */,
 				F5F2A41B2D6CE69A0093B848 /* HeaderView.swift */,
 				F5F2A4192D6CA3760093B848 /* Utility.swift */,
 			);
@@ -231,6 +234,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5F2A4222D6E14930093B848 /* ImagePicker.swift in Sources */,
 				F5275C982D67C7E000B34A8D /* NetworkManager.swift in Sources */,
 				F59A5B4E2D6777C5002EDB02 /* ContentView.swift in Sources */,
 				F5275C902D677F7300B34A8D /* SignUpView.swift in Sources */,
