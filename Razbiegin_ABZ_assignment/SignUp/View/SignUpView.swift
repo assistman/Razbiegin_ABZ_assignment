@@ -29,38 +29,43 @@ struct SignUpView: View {
 
     var body: some View {
         NavigationView {
-            VStack(alignment: .center) {
+            VStack {
                 HeaderView(text: "Working with POST request")
-                FieldsView()
-                HStack {
-                    Text("Select your position").font(.title2).padding(.top)
-                    Spacer()
-                }.padding(.horizontal)
-                HStack {
-                    RadioButtons(selected: $selected)
-                        .padding(.horizontal)
-                    Spacer()
+                ScrollView {
+                    VStack(alignment: .center) {
+                        FieldsView()
+                            .padding(.top, 16)
+                        HStack {
+                            Text("Select your position").font(.title2).padding(.top, 8)
+                            Spacer()
+                        }.padding(.horizontal)
+                        HStack {
+                            RadioButtons(selected: $selected, positions: ["Frontend developer", "Backend developer", "Designer", "QA"])
+                                .padding(.horizontal)
+                            Spacer()
+                        }
+                        PhotoView(
+                            image: $inputImage,
+                            valid: $imageValid,
+                            action: {
+                                showingImagePicker = true
+                            }
+                        )
+                        Spacer()
+                        Button(action: {
+                            nameValid.toggle()
+                            emailValid.toggle()
+                            phoneValid.toggle()
+                        }) {
+                            Text("SignUp").padding(.vertical).padding(.horizontal, 40)
+                                .foregroundColor(.black)
+                        }
+                        .background(Color("normal"))
+                        .clipShape(Capsule())
+                    }.padding(.vertical)
                 }
-                PhotoView(
-                    image: $inputImage,
-                    valid: $imageValid,
-                    action: {
-                        showingImagePicker = true
-                    }
-                )
-                Spacer()
-                Button(action: {
-                    nameValid.toggle()
-                    emailValid.toggle()
-                    phoneValid.toggle()
-                }) {
-                    Text("SignUp").padding(.vertical).padding(.horizontal, 40)
-                        .foregroundColor(.black)
-                }
-                .background(Color("normal"))
-                .clipShape(Capsule())
+            }
 
-            }.padding(.vertical)
         }.onChange(of: inputImage, perform: {_ in
             print("Image data has been changed!")
         })
@@ -93,14 +98,12 @@ struct SignUpView: View {
     }
 }
 
-
-
 struct PhotoView: View {
+
     @Binding var image: UIImage?
     @Binding var valid: Bool
 
     var action: (() -> Void)?
-
     var uploadHint: String = "Upload your photo"
     var uploadButtonString: String = "Upload"
     var noPhotoHint: String = "Photo is required"
@@ -115,13 +118,14 @@ struct PhotoView: View {
                 Text(uploadHint)
                     .font(.headline)
                     .foregroundColor(noteColor)
+                    .padding()
                 Button {
                     action?()
                 } label: {
                     Text(uploadButtonString)
                         .font(.headline)
                         .foregroundColor(.cyan)
-                }
+                }.padding()
 
             }
             .frame(height: 60)
@@ -136,8 +140,8 @@ struct PhotoView: View {
 struct RadioButtons: View {
 
     @Binding var selected: String
+    var positions: [String]
 
-    var positions = ["Frontend developer", "Backend developer", "Designer", "QA"]
     var body: some View {
         VStack(alignment: .leading) {
             ForEach(positions,id: \.self) {i in
@@ -150,7 +154,6 @@ struct RadioButtons: View {
                                 Circle()
                                     .stroke(Color("radio_button_selected"), lineWidth: 5)
                                     .frame(width: 14, height: 14)
-
                             } else {
                                 Circle()
                                     .stroke(Color.gray, lineWidth: 1)
@@ -160,8 +163,8 @@ struct RadioButtons: View {
                         Text(i)
                             .padding(.horizontal)
                     }.foregroundColor(.black)
-                }.padding(.top)
+                }.padding(.top, 8)
             }
-        }.padding(.vertical)
+        }
     }
 }
