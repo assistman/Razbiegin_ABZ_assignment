@@ -4,8 +4,6 @@
 //
 //  Created by Stanislav Razbiegin on 20.02.2025.
 //
-// just checking the broken github account settings
-// account name set to assistman
 
 import Foundation
 import SwiftUI
@@ -16,9 +14,13 @@ struct SignUpView: View {
     @State var name: String = ""
     @State var email: String = ""
     @State var phone: String = ""
+    @State var nameValid: Bool = true
+    @State var emailValid: Bool = true
+    @State var phoneValid: Bool = true
     @State var position: Int?
     @State var selected = ""
     @State var inputImage: UIImage?
+    @State var imageValid: Bool = true
     @State var showingImagePicker = false
 
     init(viewModel: SignUpViewModel) {
@@ -39,14 +41,18 @@ struct SignUpView: View {
                         .padding(.horizontal)
                     Spacer()
                 }
-                Button(action: {
-                    showingImagePicker = true
-                }) {
-                    Text("Select image")
-                }
+                PhotoView(
+                    image: $inputImage,
+                    valid: $imageValid,
+                    action: {
+                        showingImagePicker = true
+                    }
+                )
                 Spacer()
                 Button(action: {
-                    // Make Sign Up
+                    nameValid.toggle()
+                    emailValid.toggle()
+                    phoneValid.toggle()
                 }) {
                     Text("SignUp").padding(.vertical).padding(.horizontal, 40)
                         .foregroundColor(.black)
@@ -62,50 +68,67 @@ struct SignUpView: View {
             ImagePicker(image: $inputImage)
         }
     }
-}
 
-struct FieldsView: View {
-
-    var body: some View {
+    func FieldsView() -> some View {
         VStack(alignment: .leading) {
-            TextFieldView(text: "",
-                          valid: true,
+            TextFieldView(text: $name,
+                          valid: $nameValid,
                           placeholderText: "Your name",
-                          validationHint: "",
                           keyboardType: .default)
             .padding(.horizontal, 16)
-            TextFieldView(text: "",
-                          valid: true,
+            TextFieldView(text: $email,
+                          valid: $emailValid,
                           placeholderText: "Email",
-                          validationHint: "",
+                          invalidFormatHint: "Invalid email format",
                           keyboardType: .emailAddress)
             .padding(.horizontal, 16)
-            TextFieldView(text: "",
-                          valid: true,
+            TextFieldView(text: $phone,
+                          valid: $phoneValid,
                           placeholderText: "Phone",
                           validationHint: PhoneFormatter.formatPhone(number: "+38XXXXXXXXXX"),
+                          invalidFormatHint: "Invalid phone format",
                           keyboardType: .phonePad)
             .padding(.horizontal, 16)
         }
     }
 }
 
-struct TextFieldView: View {
 
-    @State var text: String
-    @State var valid: Bool
 
-    var placeholderText: String
-    var validationHint: String
-    var keyboardType: UIKeyboardType
+struct PhotoView: View {
+    @Binding var image: UIImage?
+    @Binding var valid: Bool
+
+    var action: (() -> Void)?
+
+    var uploadHint: String = "Upload your photo"
+    var uploadButtonString: String = "Upload"
+    var noPhotoHint: String = "Photo is required"
+
+    var noteColor: Color {
+        valid ? Color.gray : Color("error")
+    }
 
     var body: some View {
-        VStack(alignment: .leading) {
-            TextField(placeholderText, text: $text)
-                .keyboardType(keyboardType)
-                .textFieldStyle(.roundedBorder)
-            Text(validationHint)
-                .foregroundColor( valid ? Color.gray : Color("error"))
+        VStack{
+            HStack {
+                Text(uploadHint)
+                    .font(.headline)
+                    .foregroundColor(noteColor)
+                Button {
+                    action?()
+                } label: {
+                    Text(uploadButtonString)
+                        .font(.headline)
+                        .foregroundColor(.cyan)
+                }
+
+            }
+            .frame(height: 60)
+            .roundedBorder(color: noteColor, cornerRadius: 3.0)
+            Text(valid ? " " : noPhotoHint)
+                .font(.footnote)
+                .foregroundColor(noteColor)
         }
     }
 }

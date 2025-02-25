@@ -22,6 +22,8 @@
 		F5F2A41A2D6CA3760093B848 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F2A4192D6CA3760093B848 /* Utility.swift */; };
 		F5F2A41C2D6CE69A0093B848 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F2A41B2D6CE69A0093B848 /* HeaderView.swift */; };
 		F5F2A4222D6E14930093B848 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F2A4212D6E14930093B848 /* ImagePicker.swift */; };
+		F5F2A4242D6E42930093B848 /* View+RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F2A4232D6E42930093B848 /* View+RoundedCorners.swift */; };
+		F5F2A4262D6E46DB0093B848 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F2A4252D6E46DB0093B848 /* TextFieldView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		F5F2A4192D6CA3760093B848 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		F5F2A41B2D6CE69A0093B848 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		F5F2A4212D6E14930093B848 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		F5F2A4232D6E42930093B848 /* View+RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+RoundedCorners.swift"; sourceTree = "<group>"; };
+		F5F2A4252D6E46DB0093B848 /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				F5275C8F2D677F7300B34A8D /* SignUpView.swift */,
+				F5F2A4252D6E46DB0093B848 /* TextFieldView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -152,6 +157,7 @@
 				F5F2A4212D6E14930093B848 /* ImagePicker.swift */,
 				F5F2A41B2D6CE69A0093B848 /* HeaderView.swift */,
 				F5F2A4192D6CA3760093B848 /* Utility.swift */,
+				F5F2A4232D6E42930093B848 /* View+RoundedCorners.swift */,
 			);
 			path = Razbiegin_ABZ_assignment;
 			sourceTree = "<group>";
@@ -235,6 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5F2A4222D6E14930093B848 /* ImagePicker.swift in Sources */,
+				F5F2A4242D6E42930093B848 /* View+RoundedCorners.swift in Sources */,
 				F5275C982D67C7E000B34A8D /* NetworkManager.swift in Sources */,
 				F59A5B4E2D6777C5002EDB02 /* ContentView.swift in Sources */,
 				F5275C902D677F7300B34A8D /* SignUpView.swift in Sources */,
@@ -244,6 +251,7 @@
 				F59A5B4C2D6777C5002EDB02 /* Razbiegin_ABZ_assignmentApp.swift in Sources */,
 				F5F2A41C2D6CE69A0093B848 /* HeaderView.swift in Sources */,
 				F5275C962D677FBE00B34A8D /* UsersViewModel.swift in Sources */,
+				F5F2A4262D6E46DB0093B848 /* TextFieldView.swift in Sources */,
 				F57A53902D6C9FC800528DEB /* ResultView.swift in Sources */,
 				F5275C942D677FA800B34A8D /* UsersView.swift in Sources */,
 				F5275C8E2D677F5800B34A8D /* SignUpModel.swift in Sources */,
