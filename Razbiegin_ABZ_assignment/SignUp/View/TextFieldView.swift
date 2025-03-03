@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 struct TextFieldView: View {
-
     @Binding var text: String
     @Binding var validationMessage: String?
 

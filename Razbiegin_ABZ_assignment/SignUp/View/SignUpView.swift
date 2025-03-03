@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 struct SignUpView: View {
-
     @ObservedObject var viewModel: SignUpViewModel
 
     init(viewModel: SignUpViewModel) {
@@ -30,7 +29,9 @@ struct SignUpView: View {
                             Spacer()
                         }.padding(.horizontal)
                         HStack {
-                            RadioButtons(selected: $viewModel.form.positionId, positions: $viewModel.positions)
+                            RadioButtons(
+                                selected: $viewModel.form.positionId,
+                                positions: $viewModel.positions)
                                 .padding(.horizontal)
                             Spacer()
                         }
@@ -44,7 +45,6 @@ struct SignUpView: View {
                         Spacer()
                         Button(action: {
                             viewModel.createUser()
-//                            viewModel.getPositions()
                         }) {
                             Text("SignUp").padding(.vertical).padding(.horizontal, 40)
                                 .foregroundColor(.black)
@@ -65,92 +65,24 @@ struct SignUpView: View {
 
     func FieldsView() -> some View {
         VStack(alignment: .leading) {
-            TextFieldView(text: $viewModel.form.name,
-                          validationMessage: $viewModel.form.nameValidationMessage ,
-                          placeholderText: "Your name",
-                          keyboardType: .default)
+            TextFieldView(
+                text: $viewModel.form.name,
+                validationMessage: $viewModel.form.nameValidationMessage ,
+                placeholderText: "Your name",
+                keyboardType: .default)
             .padding(.horizontal, 16)
-            TextFieldView(text: $viewModel.form.email,
-                          validationMessage: $viewModel.form.emailValidationMessage,
-                          placeholderText: "Email",
-                          keyboardType: .emailAddress)
+            TextFieldView(
+                text: $viewModel.form.email,
+                validationMessage: $viewModel.form.emailValidationMessage,
+                placeholderText: "Email",
+                keyboardType: .emailAddress)
             .padding(.horizontal, 16)
-            TextFieldView(text: $viewModel.form.phone,
-                          validationMessage: $viewModel.form.phoneValidationMessage,
-                          placeholderText: "Phone",
-                          keyboardType: .phonePad)
+            TextFieldView(
+                text: $viewModel.form.phone,
+                validationMessage: $viewModel.form.phoneValidationMessage,
+                placeholderText: "Phone",
+                keyboardType: .phonePad)
             .padding(.horizontal, 16)
-        }
-    }
-}
-
-struct PhotoView: View {
-
-    @Binding var image: UIImage?
-    @Binding var valid: Bool
-
-    var action: (() -> Void)?
-    var uploadHint: String = "Upload your photo"
-    var uploadButtonString: String = "Upload"
-    var noPhotoHint: String = "Photo is required"
-
-    var noteColor: Color {
-        valid ? Color.gray : Color("error")
-    }
-
-    var body: some View {
-        VStack{
-            HStack {
-                Text(uploadHint)
-                    .font(.headline)
-                    .foregroundColor(noteColor)
-                    .padding()
-                Button {
-                    action?()
-                } label: {
-                    Text(uploadButtonString)
-                        .font(.headline)
-                        .foregroundColor(.cyan)
-                }.padding()
-
-            }
-            .frame(height: 60)
-            .roundedBorder(color: noteColor, cornerRadius: 3.0)
-            Text(valid ? " " : noPhotoHint)
-                .font(.footnote)
-                .foregroundColor(noteColor)
-        }
-    }
-}
-
-struct RadioButtons: View {
-
-    @Binding var selected: Int?
-    @Binding var positions: [Position]
-
-    var body: some View {
-        VStack(alignment: .leading) {
-            ForEach(positions,id: \.id) {position in
-                Button(action: {
-                    self.selected = position.id
-                }) {
-                    HStack {
-                        ZStack {
-                            if self.selected == position.id {
-                                Circle()
-                                    .stroke(Color("radio_button_selected"), lineWidth: 5)
-                                    .frame(width: 14, height: 14)
-                            } else {
-                                Circle()
-                                    .stroke(Color.gray, lineWidth: 1)
-                                    .frame(width: 14, height: 14)
-                            }
-                        }
-                        Text(position.name)
-                            .padding(.horizontal)
-                    }.foregroundColor(.black)
-                }.padding(.top, 8)
-            }
         }
     }
 }

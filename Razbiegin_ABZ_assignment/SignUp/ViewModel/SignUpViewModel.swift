@@ -47,7 +47,7 @@ class SignUpViewModel: ObservableObject {
 
     @Published var viewState: SignUpViewState
     @Published var form: Form
-    var positions = [Position]()
+    @Published var positions = [Position]()
 
     var networkManager: NetworkManager
 
