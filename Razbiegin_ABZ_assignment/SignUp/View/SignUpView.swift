@@ -43,6 +43,7 @@ struct SignUpView: View {
                         Spacer()
                         Button(action: {
                             viewModel.createUser()
+//                            viewModel.getPositions()
                         }) {
                             Text("SignUp").padding(.vertical).padding(.horizontal, 40)
                                 .foregroundColor(.black)

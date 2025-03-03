@@ -47,6 +47,7 @@ class SignUpViewModel: ObservableObject {
 
     @Published var viewState: SignUpViewState
     @Published var form: Form
+    var positions: [Position]?
 
     var networkManager: NetworkManager
 
@@ -76,7 +77,23 @@ class SignUpViewModel: ObservableObject {
         // TODO: Add other validations
         return isValid
     }
-    
+
+    func getPositions() {
+        Task {
+            do {
+                let response = try await networkManager.getPositions()
+                await MainActor.run {
+                    self.positions = response.positions
+                    print(self.positions ?? "no positions")
+                }
+            } catch {
+                await MainActor.run {
+                    // TODO: Handle error
+                }
+            }
+        }
+    }
+
     func createUser() {
         guard vaidateUserInput() else { return }
 //        self.viewState = .loading

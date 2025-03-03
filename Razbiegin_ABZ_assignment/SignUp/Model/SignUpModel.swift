@@ -27,13 +27,6 @@ enum SignUpUserErrorCode {
     }
 }
 
-/*
- {
-   "success": true,
-   "user_id": 25794,
-   "message": "New user successfully registered"
- }
- */
 struct SignUpResponse: Codable {
     let success: Bool
     let user_id: Int
@@ -45,7 +38,17 @@ struct TokenResponse: Codable {
     let success: Bool
 }
 
-struct SignUpUserParam: Codable {
+struct PositionsResponse: Codable {
+    let success: Bool
+    let positions: [Position]
+}
+
+struct Position: Codable {
+    let id: Int
+    let name: String
+}
+
+struct SignUpUserParameters: Codable {
     let name: String
     let email: String
     let phone: String

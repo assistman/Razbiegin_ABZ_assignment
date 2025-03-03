@@ -2,7 +2,7 @@
 //  HeaderView.swift
 //  Razbiegin_ABZ_assignment
 //
-//  Created by Vlad on 24.02.2025.
+//  Created by Stanislav Razbiegin on 24.02.2025.
 //
 
 import Foundation

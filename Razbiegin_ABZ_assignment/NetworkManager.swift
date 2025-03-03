@@ -22,6 +22,8 @@ class NetworkManager {
     private let baseUrl = "https://frontend-test-assignment-api.abz.agency/api/v1/"
     private let usersUrl = "https://frontend-test-assignment-api.abz.agency/api/v1/users"
     private let tokenUrl = "https://frontend-test-assignment-api.abz.agency/api/v1/token"
+    private let positionsUrl = "https://frontend-test-assignment-api.abz.agency/api/v1/positions"
+
     var token: String?
 
     func getTokenString() async throws -> String {
@@ -35,6 +37,13 @@ class NetworkManager {
         return self.token ?? ""
     }
 
+    func getPositions() async throws -> PositionsResponse {
+        let request = try buildPositionsRequest()
+        let responseData = try await fetchRemoteData(request: request)
+        let positionsResponse = try decodePositionsResponse(responseData)
+        return positionsResponse
+    }
+
     func getUsers(page: Int, count: Int) async throws -> UsersResponse {
         let endpoint = usersUrl + "?page=\(page)&count=\(count)" // TODO: Use URLComponents
         print("endpoint: \(endpoint)")
@@ -46,7 +55,7 @@ class NetworkManager {
         return try decodeUsersResponse(responseData)
     }
 
-    func createUser(user: SignUpUserParam) async throws -> Void {
+    func createUser(user: SignUpUserParameters) async throws -> Void {
         let parameters: [String: Any] = [
             "name": user.name,
             "email": user.email,
@@ -59,24 +68,32 @@ class NetworkManager {
         print(response)
     }
 
-    func buildTokenRequest() throws -> URLRequest {
+    private func buildTokenRequest() throws -> URLRequest {
         guard let url = URL(string: self.tokenUrl) else {
             throw NetworkError.badUrl
         }
+        return buildGetRequestWith(url: url)
+    }
+
+    private func buildPositionsRequest() throws -> URLRequest {
+        guard let url = URL(string: self.positionsUrl) else {
+            throw NetworkError.badUrl
+        }
+        return buildGetRequestWith(url: url)
+    }
+
+    private func buildGetUsersRequest(url: URL) -> URLRequest {
+        return buildGetRequestWith(url: url)
+    }
+
+    private func buildGetRequestWith(url: URL) -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = HTTPMethod.GET.rawValue
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         return request
     }
 
-    func buildGetUsersRequest(url: URL) -> URLRequest {
-        var request = URLRequest(url: url)
-        request.httpMethod = HTTPMethod.GET.rawValue
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        return request
-    }
-
-    func buildCreateUserRequest(parameters: [String: Any]) throws -> URLRequest {
+    private func buildCreateUserRequest(parameters: [String: Any]) throws -> URLRequest {
         guard let url = URL(string: self.usersUrl) else {
             throw NetworkError.badUrl
         }
@@ -118,5 +135,9 @@ class NetworkManager {
 
     private func decodeSignUpResponse(_ data: Data) throws -> SignUpResponse {
         try JSONDecoder().decode(SignUpResponse.self, from: data)
+    }
+
+    private func decodePositionsResponse(_ data: Data) throws -> PositionsResponse {
+        try JSONDecoder().decode(PositionsResponse.self, from: data)
     }
 }
