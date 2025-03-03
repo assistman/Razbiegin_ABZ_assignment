@@ -10,17 +10,8 @@ import SwiftUI
 
 struct SignUpView: View {
 
-    @State var viewModel: SignUpViewModel
-    @State var name: String = ""
-    @State var email: String = ""
-    @State var phone: String = ""
-    @State var nameValid: Bool = true
-    @State var emailValid: Bool = true
-    @State var phoneValid: Bool = true
-    @State var position: Int?
+    @ObservedObject var viewModel: SignUpViewModel
     @State var selected = ""
-    @State var inputImage: UIImage?
-    @State var imageValid: Bool = true
     @State var showingImagePicker = false
 
     init(viewModel: SignUpViewModel) {
@@ -45,17 +36,28 @@ struct SignUpView: View {
                             Spacer()
                         }
                         PhotoView(
-                            image: $inputImage,
-                            valid: $imageValid,
+                            image: $viewModel.inputImage,
+                            valid: $viewModel.imageValid,
                             action: {
                                 showingImagePicker = true
                             }
                         )
                         Spacer()
                         Button(action: {
-                            nameValid.toggle()
-                            emailValid.toggle()
-                            phoneValid.toggle()
+
+//                            viewModel.nameValid.toggle()
+//                            viewModel.emailValid.toggle()
+//                            viewModel.phoneValid.toggle()
+
+                            let image = UIImage(named: "imagetest")
+                            guard let imageData = image?.jpegData(compressionQuality: 0.8) else {
+                                return
+                            }
+                            let imageDataString = imageData.base64EncodedString()
+                            print(imageDataString)
+                            let user = SignUpUserParam(name: "Jack", email: "email@raz.com", phone: "380964034444", position_id: 1, photo: imageDataString)
+                            self.viewModel.createUser(user: user)
+
                         }) {
                             Text("SignUp").padding(.vertical).padding(.horizontal, 40)
                                 .foregroundColor(.black)
@@ -66,29 +68,29 @@ struct SignUpView: View {
                 }
             }
 
-        }.onChange(of: inputImage, perform: {_ in
+        }.onChange(of: viewModel.inputImage, perform: {_ in
             print("Image data has been changed!")
         })
         .sheet(isPresented: $showingImagePicker) {
-            ImagePicker(image: $inputImage)
+            ImagePicker(image: $viewModel.inputImage)
         }
     }
 
     func FieldsView() -> some View {
         VStack(alignment: .leading) {
-            TextFieldView(text: $name,
-                          valid: $nameValid,
+            TextFieldView(text: $viewModel.name,
+                          valid: $viewModel.nameValid,
                           placeholderText: "Your name",
                           keyboardType: .default)
             .padding(.horizontal, 16)
-            TextFieldView(text: $email,
-                          valid: $emailValid,
+            TextFieldView(text: $viewModel.email,
+                          valid: $viewModel.emailValid,
                           placeholderText: "Email",
                           invalidFormatHint: "Invalid email format",
                           keyboardType: .emailAddress)
             .padding(.horizontal, 16)
-            TextFieldView(text: $phone,
-                          valid: $phoneValid,
+            TextFieldView(text: $viewModel.phone,
+                          valid: $viewModel.phoneValid,
                           placeholderText: "Phone",
                           validationHint: PhoneFormatter.formatPhone(number: "+38XXXXXXXXXX"),
                           invalidFormatHint: "Invalid phone format",

@@ -49,6 +49,9 @@ struct TextFieldView: View {
                     )
                         .font(.headline)
                         .keyboardType(keyboardType)
+                        .onSubmit {
+                            // Field validation should be done onSubmit
+                        }
                         .padding(.horizontal)
                         .frame(maxWidth: .infinity)
                 } else {
@@ -60,6 +63,9 @@ struct TextFieldView: View {
                         .textFieldStyle(.plain)
                         .font(.subheadline)
                         .keyboardType(keyboardType)
+                        .onSubmit {
+                            // Field validation should be done onSubmit
+                        }
                         .padding(.horizontal)
                         .frame(maxWidth: .infinity)
                 }

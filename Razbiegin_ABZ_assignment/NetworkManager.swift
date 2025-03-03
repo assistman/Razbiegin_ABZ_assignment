@@ -88,6 +88,8 @@ class NetworkManager {
             throw NetworkError.emptyToken
         }
         request.addValue(token, forHTTPHeaderField: "Token")
+        request.addValue("application/json", forHTTPHeaderField: "accept")
+
         request.httpBody = try JSONSerialization.data(withJSONObject: parameters)
 
         return request
