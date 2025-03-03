@@ -24,6 +24,8 @@
 		F5F2A4222D6E14930093B848 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F2A4212D6E14930093B848 /* ImagePicker.swift */; };
 		F5F2A4242D6E42930093B848 /* View+RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F2A4232D6E42930093B848 /* View+RoundedCorners.swift */; };
 		F5F2A4262D6E46DB0093B848 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F2A4252D6E46DB0093B848 /* TextFieldView.swift */; };
+		F5F2A4282D7626EA0093B848 /* UserInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F2A4272D7626E90093B848 /* UserInput.swift */; };
+		F5F2A42A2D7627370093B848 /* UserValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F2A4292D7627370093B848 /* UserValidation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,8 @@
 		F5F2A4212D6E14930093B848 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		F5F2A4232D6E42930093B848 /* View+RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+RoundedCorners.swift"; sourceTree = "<group>"; };
 		F5F2A4252D6E46DB0093B848 /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
+		F5F2A4272D7626E90093B848 /* UserInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInput.swift; sourceTree = "<group>"; };
+		F5F2A4292D7627370093B848 /* UserValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserValidation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +120,8 @@
 			isa = PBXGroup;
 			children = (
 				F5275C8B2D677F1F00B34A8D /* SignUpViewModel.swift */,
+				F5F2A4292D7627370093B848 /* UserValidation.swift */,
+				F5F2A4272D7626E90093B848 /* UserInput.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -249,8 +255,10 @@
 				F5275C922D677F9B00B34A8D /* UsersModel.swift in Sources */,
 				F5275C8C2D677F1F00B34A8D /* SignUpViewModel.swift in Sources */,
 				F59A5B4C2D6777C5002EDB02 /* Razbiegin_ABZ_assignmentApp.swift in Sources */,
+				F5F2A4282D7626EA0093B848 /* UserInput.swift in Sources */,
 				F5F2A41C2D6CE69A0093B848 /* HeaderView.swift in Sources */,
 				F5275C962D677FBE00B34A8D /* UsersViewModel.swift in Sources */,
+				F5F2A42A2D7627370093B848 /* UserValidation.swift in Sources */,
 				F5F2A4262D6E46DB0093B848 /* TextFieldView.swift in Sources */,
 				F57A53902D6C9FC800528DEB /* ResultView.swift in Sources */,
 				F5275C942D677FA800B34A8D /* UsersView.swift in Sources */,

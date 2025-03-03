@@ -11,8 +11,6 @@ import SwiftUI
 struct SignUpView: View {
 
     @ObservedObject var viewModel: SignUpViewModel
-    @State var selected = ""
-    @State var showingImagePicker = false
 
     init(viewModel: SignUpViewModel) {
         self.viewModel = viewModel
@@ -31,33 +29,20 @@ struct SignUpView: View {
                             Spacer()
                         }.padding(.horizontal)
                         HStack {
-                            RadioButtons(selected: $selected, positions: ["Frontend developer", "Backend developer", "Designer", "QA"])
-                                .padding(.horizontal)
+//                            RadioButtons(selected: $viewModel.form.position, positions: ["Frontend developer", "Backend developer", "Designer", "QA"])
+//                                .padding(.horizontal)
                             Spacer()
                         }
                         PhotoView(
-                            image: $viewModel.inputImage,
-                            valid: $viewModel.imageValid,
+                            image: $viewModel.form.inputImage,
+                            valid: $viewModel.form.imageValid,
                             action: {
-                                showingImagePicker = true
+                                viewModel.form.showingImagePicker = true
                             }
                         )
                         Spacer()
                         Button(action: {
-
-//                            viewModel.nameValid.toggle()
-//                            viewModel.emailValid.toggle()
-//                            viewModel.phoneValid.toggle()
-
-                            let image = UIImage(named: "imagetest")
-                            guard let imageData = image?.jpegData(compressionQuality: 0.8) else {
-                                return
-                            }
-                            let imageDataString = imageData.base64EncodedString()
-                            print(imageDataString)
-                            let user = SignUpUserParam(name: "Jack", email: "email@raz.com", phone: "380964034444", position_id: 1, photo: imageDataString)
-                            self.viewModel.createUser(user: user)
-
+                            viewModel.createUser()
                         }) {
                             Text("SignUp").padding(.vertical).padding(.horizontal, 40)
                                 .foregroundColor(.black)
@@ -68,32 +53,29 @@ struct SignUpView: View {
                 }
             }
 
-        }.onChange(of: viewModel.inputImage, perform: {_ in
+        }.onChange(of: viewModel.form.inputImage, perform: {_ in
             print("Image data has been changed!")
         })
-        .sheet(isPresented: $showingImagePicker) {
-            ImagePicker(image: $viewModel.inputImage)
+        .sheet(isPresented: $viewModel.form.showingImagePicker) {
+            ImagePicker(image: $viewModel.form.inputImage)
         }
     }
 
     func FieldsView() -> some View {
         VStack(alignment: .leading) {
-            TextFieldView(text: $viewModel.name,
-                          valid: $viewModel.nameValid,
+            TextFieldView(text: $viewModel.form.name,
+                          validationMessage: $viewModel.form.nameValidationMessage ,
                           placeholderText: "Your name",
                           keyboardType: .default)
             .padding(.horizontal, 16)
-            TextFieldView(text: $viewModel.email,
-                          valid: $viewModel.emailValid,
+            TextFieldView(text: $viewModel.form.email,
+                          validationMessage: $viewModel.form.emailValidationMessage,
                           placeholderText: "Email",
-                          invalidFormatHint: "Invalid email format",
                           keyboardType: .emailAddress)
             .padding(.horizontal, 16)
-            TextFieldView(text: $viewModel.phone,
-                          valid: $viewModel.phoneValid,
+            TextFieldView(text: $viewModel.form.phone,
+                          validationMessage: $viewModel.form.phoneValidationMessage,
                           placeholderText: "Phone",
-                          validationHint: PhoneFormatter.formatPhone(number: "+38XXXXXXXXXX"),
-                          invalidFormatHint: "Invalid phone format",
                           keyboardType: .phonePad)
             .padding(.horizontal, 16)
         }
