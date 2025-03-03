@@ -11,13 +11,19 @@ import Combine
 
 class SignUpViewModel: ObservableObject {
 
+    enum PositionsSource {
+        case loading
+        case loaded([Position])
+        case loadingError
+    }
+
     enum SignUpViewState {
         case loading
         case loaded
         case loadingError(Error)
     }
 
-    struct Form {
+    struct ViewState {
         var name: String
         var email: String
         var phone: String
@@ -28,6 +34,8 @@ class SignUpViewModel: ObservableObject {
         var phoneValidationMessage: String?
         var imageValid: Bool
         var showingImagePicker: Bool
+
+        var positionsSource: PositionsSource
 
         static var empty: Self {
             .init(
@@ -40,37 +48,36 @@ class SignUpViewModel: ObservableObject {
                 emailValidationMessage: nil,
                 phoneValidationMessage: nil,
                 imageValid: true,
-                showingImagePicker: false
+                showingImagePicker: false,
+                positionsSource: .loading
             )
         }
     }
 
-    @Published var viewState: SignUpViewState
-    @Published var form: Form
+    @Published var viewState: ViewState
     @Published var positions = [Position]()
 
     var networkManager: NetworkManager
 
     init(manager: NetworkManager) {
         self.networkManager = manager
-        self.viewState = .loaded
-        self.form = .empty
+        self.viewState = .empty
     }
 
     private func vaidateUserInput() -> Bool {
         var isValid = true
-        form.nameValidationMessage = nil
-        if form.name.isEmpty {
-            form.nameValidationMessage = "Required field"
+        viewState.nameValidationMessage = nil
+        if viewState.name.isEmpty {
+            viewState.nameValidationMessage = "Required field"
             isValid = false
         }
 
-        form.emailValidationMessage = nil
-        if form.email.isEmpty {
-            form.emailValidationMessage = "Required field"
+        viewState.emailValidationMessage = nil
+        if viewState.email.isEmpty {
+            viewState.emailValidationMessage = "Required field"
             isValid = false
-        } else if !form.email.isValidEmail {
-            form.emailValidationMessage = "Invalid email format"
+        } else if !viewState.email.isValidEmail {
+            viewState.emailValidationMessage = "Invalid email format"
             isValid = false
         }
 
@@ -83,17 +90,13 @@ class SignUpViewModel: ObservableObject {
             do {
                 let response = try await networkManager.getPositions()
                 await MainActor.run {
-                    self.positions = response.positions
-                    if let postion = response.positions.first {
-                        self.form.positionId = postion.id
-                    } else {
-                        self.form.positionId = nil
-                    }
-                    print(self.positions)
+                    let positions = response.positions
+                    print(positions)
+                    self.viewState.positionsSource = .loaded(positions)
                 }
             } catch {
                 await MainActor.run {
-                    // TODO: Handle error
+                    self.viewState.positionsSource = .loadingError
                 }
             }
         }

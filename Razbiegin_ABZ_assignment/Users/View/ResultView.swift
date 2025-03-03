@@ -9,10 +9,12 @@ import Foundation
 import SwiftUI
 
 struct ResultView: View {
+    typealias Action = () -> Void
+
     let imageName: String
     let text: String
     let buttonTitle: String
-    let action: () -> Void
+    let action: Action
 
     var body: some View {
         VStack(spacing: 24) {
@@ -33,5 +35,14 @@ struct ResultView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .padding()
         .background(Color.white)
+    }
+
+    static func noConnection(action: @escaping Action) -> Self {
+        .init(
+            imageName: "no_connection",
+            text: "There is no internet connection",
+            buttonTitle: "Try again",
+            action: action
+        )
     }
 }

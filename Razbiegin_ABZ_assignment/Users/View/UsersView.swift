@@ -27,12 +27,7 @@ struct UsersView: View {
             }
         }
         .fullScreenCover(isPresented: .constant(viewModel.viewState.isError)) {
-            ResultView(
-                imageName: "no_connection",
-                text: "There is no internet connection",
-                buttonTitle: "Try again",
-                action: { viewModel.getUsers() }
-            )
+            ResultView.noConnection(action: { viewModel.getUsers() })
         }
     }
 

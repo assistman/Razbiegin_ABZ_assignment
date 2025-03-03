@@ -43,7 +43,7 @@ struct PositionsResponse: Codable {
     let positions: [Position]
 }
 
-struct Position: Codable {
+struct Position: Codable, Identifiable {
     let id: Int
     let name: String
 }

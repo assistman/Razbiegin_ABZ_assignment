@@ -28,18 +28,29 @@ struct SignUpView: View {
                             Text("Select your position").font(.title2).padding(.top, 8)
                             Spacer()
                         }.padding(.horizontal)
-                        HStack {
-                            RadioButtons(
-                                selected: $viewModel.form.positionId,
-                                positions: $viewModel.positions)
+                        switch viewModel.viewState.positionsSource {
+                            case .loading:
+                                ProgressView()
+                            case .loaded(let positions):
+                                HStack {
+                                    RadioButtons(
+                                        selectedId: $viewModel.viewState.positionId,
+                                        positions: positions
+                                    )
+                                    .padding(.horizontal)
+                                    Spacer()
+                                }
                                 .padding(.horizontal)
-                            Spacer()
+                            case .loadingError:
+                                    ResultView.noConnection(
+                                        action: { viewModel.getPositions() }
+                                    )
                         }
                         PhotoView(
-                            image: $viewModel.form.inputImage,
-                            valid: $viewModel.form.imageValid,
+                            image: $viewModel.viewState.inputImage,
+                            valid: $viewModel.viewState.imageValid,
                             action: {
-                                viewModel.form.showingImagePicker = true
+                                viewModel.viewState.showingImagePicker = true
                             }
                         )
                         Spacer()
@@ -55,31 +66,31 @@ struct SignUpView: View {
                 }
             }
 
-        }.onChange(of: viewModel.form.inputImage, perform: {_ in
+        }.onChange(of: viewModel.viewState.inputImage, perform: {_ in
             print("Image data has been changed!")
         })
-        .sheet(isPresented: $viewModel.form.showingImagePicker) {
-            ImagePicker(image: $viewModel.form.inputImage)
+        .sheet(isPresented: $viewModel.viewState.showingImagePicker) {
+            ImagePicker(image: $viewModel.viewState.inputImage)
         }
     }
 
     func FieldsView() -> some View {
         VStack(alignment: .leading) {
             TextFieldView(
-                text: $viewModel.form.name,
-                validationMessage: $viewModel.form.nameValidationMessage ,
+                text: $viewModel.viewState.name,
+                validationMessage: $viewModel.viewState.nameValidationMessage ,
                 placeholderText: "Your name",
                 keyboardType: .default)
             .padding(.horizontal, 16)
             TextFieldView(
-                text: $viewModel.form.email,
-                validationMessage: $viewModel.form.emailValidationMessage,
+                text: $viewModel.viewState.email,
+                validationMessage: $viewModel.viewState.emailValidationMessage,
                 placeholderText: "Email",
                 keyboardType: .emailAddress)
             .padding(.horizontal, 16)
             TextFieldView(
-                text: $viewModel.form.phone,
-                validationMessage: $viewModel.form.phoneValidationMessage,
+                text: $viewModel.viewState.phone,
+                validationMessage: $viewModel.viewState.phoneValidationMessage,
                 placeholderText: "Phone",
                 keyboardType: .phonePad)
             .padding(.horizontal, 16)

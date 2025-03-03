@@ -9,18 +9,18 @@ import Foundation
 import SwiftUI
 
 struct RadioButtons: View {
-    @Binding var selected: Int?
-    @Binding var positions: [Position]
+    @Binding var selectedId: Int?
+    var positions: [Position]
 
     var body: some View {
         VStack(alignment: .leading) {
-            ForEach(positions,id: \.id) {position in
+            ForEach(positions) {position in
                 Button(action: {
-                    self.selected = position.id
+                    self.selectedId = position.id
                 }) {
                     HStack {
                         ZStack {
-                            if self.selected == position.id {
+                            if self.selectedId == position.id {
                                 Circle()
                                     .stroke(Color("radio_button_selected"), lineWidth: 5)
                                     .frame(width: 14, height: 14)
