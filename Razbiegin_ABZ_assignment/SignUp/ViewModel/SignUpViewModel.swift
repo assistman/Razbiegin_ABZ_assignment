@@ -21,7 +21,7 @@ class SignUpViewModel: ObservableObject {
         var name: String
         var email: String
         var phone: String
-        var position: Int?
+        var positionId: Int?
         var inputImage: UIImage?
         var nameValidationMessage: String?
         var emailValidationMessage: String?
@@ -34,7 +34,7 @@ class SignUpViewModel: ObservableObject {
                 name: "",
                 email: "",
                 phone: "",
-                position: nil,
+                positionId: nil,
                 inputImage: nil,
                 nameValidationMessage: nil,
                 emailValidationMessage: nil,
@@ -47,7 +47,7 @@ class SignUpViewModel: ObservableObject {
 
     @Published var viewState: SignUpViewState
     @Published var form: Form
-    var positions: [Position]?
+    var positions = [Position]()
 
     var networkManager: NetworkManager
 
@@ -84,7 +84,12 @@ class SignUpViewModel: ObservableObject {
                 let response = try await networkManager.getPositions()
                 await MainActor.run {
                     self.positions = response.positions
-                    print(self.positions ?? "no positions")
+                    if let postion = response.positions.first {
+                        self.form.positionId = postion.id
+                    } else {
+                        self.form.positionId = nil
+                    }
+                    print(self.positions)
                 }
             } catch {
                 await MainActor.run {

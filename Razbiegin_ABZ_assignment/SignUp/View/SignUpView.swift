@@ -14,6 +14,7 @@ struct SignUpView: View {
 
     init(viewModel: SignUpViewModel) {
         self.viewModel = viewModel
+        self.viewModel.getPositions()
     }
 
     var body: some View {
@@ -29,8 +30,8 @@ struct SignUpView: View {
                             Spacer()
                         }.padding(.horizontal)
                         HStack {
-//                            RadioButtons(selected: $viewModel.form.position, positions: ["Frontend developer", "Backend developer", "Designer", "QA"])
-//                                .padding(.horizontal)
+                            RadioButtons(selected: $viewModel.form.positionId, positions: $viewModel.positions)
+                                .padding(.horizontal)
                             Spacer()
                         }
                         PhotoView(
@@ -124,18 +125,18 @@ struct PhotoView: View {
 
 struct RadioButtons: View {
 
-    @Binding var selected: String
-    var positions: [String]
+    @Binding var selected: Int?
+    @Binding var positions: [Position]
 
     var body: some View {
         VStack(alignment: .leading) {
-            ForEach(positions,id: \.self) {i in
+            ForEach(positions,id: \.id) {position in
                 Button(action: {
-                    self.selected = i
+                    self.selected = position.id
                 }) {
                     HStack {
                         ZStack {
-                            if self.selected == i {
+                            if self.selected == position.id {
                                 Circle()
                                     .stroke(Color("radio_button_selected"), lineWidth: 5)
                                     .frame(width: 14, height: 14)
@@ -145,7 +146,7 @@ struct RadioButtons: View {
                                     .frame(width: 14, height: 14)
                             }
                         }
-                        Text(i)
+                        Text(position.name)
                             .padding(.horizontal)
                     }.foregroundColor(.black)
                 }.padding(.top, 8)
