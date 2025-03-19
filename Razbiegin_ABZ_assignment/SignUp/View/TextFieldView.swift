@@ -9,8 +9,15 @@ import Foundation
 import SwiftUI
 
 struct TextFieldView: View {
+    enum TextFieldViewFocusState: Hashable, CaseIterable {
+        case largeTextField
+        case smallTextField
+    }
+    
     @Binding var text: String
     @Binding var validationMessage: String?
+    
+    @FocusState var focusState: TextFieldViewFocusState?
 
     var placeholderText: String
     var keyboardType: UIKeyboardType
@@ -36,6 +43,12 @@ struct TextFieldView: View {
                     ).onReceive(text.publisher) { _ in
                         validationMessage = nil
                     }
+                    .onAppear() {
+                        if focusState == .smallTextField {
+                            focusState = .largeTextField
+                        }
+                    }
+                        .focused($focusState, equals: .largeTextField)
                         .font(.headline)
                         .keyboardType(keyboardType)
                         .padding(.horizontal)
@@ -46,6 +59,12 @@ struct TextFieldView: View {
                         .font(.footnote)
                         .padding(.horizontal)
                     TextField("", text: $text)
+                        .onAppear() {
+                            if focusState == .largeTextField {
+                                focusState = .smallTextField
+                            }
+                        }
+                        .focused($focusState, equals: .smallTextField)
                         .textFieldStyle(.plain)
                         .font(.subheadline)
                         .keyboardType(keyboardType)
