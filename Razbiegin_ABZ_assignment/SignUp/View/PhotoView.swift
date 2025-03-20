@@ -10,15 +10,14 @@ import SwiftUI
 
 struct PhotoView: View {
     @Binding var image: UIImage?
-    @Binding var valid: Bool
+    var errorMessage: String?
 
     var action: (() -> Void)?
     var uploadHint: String = "Upload your photo"
     var uploadButtonString: String = "Upload"
-    var noPhotoHint: String = "Photo is required"
 
     var noteColor: Color {
-        valid ? Color.gray : Color("error")
+        errorMessage == nil ? Color.gray : Color("error")
     }
 
     var body: some View {
@@ -38,7 +37,7 @@ struct PhotoView: View {
             }
             .frame(height: 60)
             .roundedBorder(color: noteColor, cornerRadius: 3.0)
-            Text(valid ? " " : noPhotoHint)
+            Text(errorMessage ?? " ")
                 .font(.footnote)
                 .foregroundColor(noteColor)
         }

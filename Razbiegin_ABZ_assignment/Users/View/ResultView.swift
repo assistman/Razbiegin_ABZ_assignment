@@ -19,6 +19,7 @@ struct ResultView: View {
     var body: some View {
         VStack(spacing: 24) {
             Image(imageName)
+            Text(text)
             Button {
                action()
             } label: {
@@ -30,7 +31,6 @@ struct ResultView: View {
                 Capsule()
                     .fill(Color.yellow)
             )
-            Text(text)
          }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .padding()

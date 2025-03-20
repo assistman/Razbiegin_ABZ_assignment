@@ -55,17 +55,20 @@ class NetworkManager {
         return try decodeUsersResponse(responseData)
     }
 
-    func createUser(user: SignUpUserParameters) async throws -> Void {
-        let parameters: [String: Any] = [
-            "name": user.name,
-            "email": user.email,
-            "phone": user.phone,
-            "position_id": user.position_id,
-            "photo": user.photo
+    func signUpUser(parameters: SignUpUserParameters) async throws -> SignUpResponse {
+        let requestParameters: [String: String] = [
+            "name": parameters.name,
+            "email": parameters.email,
+            "phone": parameters.phone,
+            "position_id": "\(parameters.positionId)",
         ]
-        let request = try buildCreateUserRequest(parameters: parameters)
-        let response = try await fetchRemoteData(request: request)
-        print(response)
+        let request = try buildSignUpUserRequest(
+            parameters: requestParameters,
+            photo: parameters.photo
+        )
+        let responseData = try await fetchRemoteData(request: request)
+        let response = try JSONDecoder().decode(SignUpResponse.self, from: responseData)
+        return response
     }
 
     private func buildTokenRequest() throws -> URLRequest {
@@ -93,22 +96,36 @@ class NetworkManager {
         return request
     }
 
-    private func buildCreateUserRequest(parameters: [String: Any]) throws -> URLRequest {
+    private func buildSignUpUserRequest(
+        parameters: [String: String],
+        photo: Data
+    ) throws -> URLRequest {
         guard let url = URL(string: self.usersUrl) else {
             throw NetworkError.badUrl
         }
         var request = URLRequest(url: url)
         request.httpMethod = HTTPMethod.POST.rawValue
-        request.addValue("multipart/form-data", forHTTPHeaderField: "Content-Type")
+        let boundary = "Boundary-\(UUID().uuidString)"
+        request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         guard let token = self.token else {
             // handle token request here
             throw NetworkError.emptyToken
         }
         request.addValue(token, forHTTPHeaderField: "Token")
         request.addValue("application/json", forHTTPHeaderField: "accept")
-
-        request.httpBody = try JSONSerialization.data(withJSONObject: parameters)
-
+        request.httpBody = try .withParameters(
+            parameters,
+            images: [
+                .init(
+                    name: "photo",
+                    fileName: "photo.jpg",
+                    data: photo
+                )
+            ],
+            boundary: boundary
+        )
+//        Just for test purposes
+//        print("request.httpBody?.utf8: \(request.httpBody?.utf8)")
         return request
     }
 
@@ -132,10 +149,10 @@ class NetworkManager {
     private func decodeUsersResponse(_ data: Data) throws -> UsersResponse {
         try JSONDecoder().decode(UsersResponse.self, from: data)
     }
-
-    private func decodeSignUpResponse(_ data: Data) throws -> SignUpResponse {
-        try JSONDecoder().decode(SignUpResponse.self, from: data)
-    }
+//
+//    private func decodeSignUpResponse(_ data: Data) throws -> SignUpResponse {
+//        try JSONDecoder().decode(SignUpResponse.self, from: data)
+//    }
 
     private func decodePositionsResponse(_ data: Data) throws -> PositionsResponse {
         try JSONDecoder().decode(PositionsResponse.self, from: data)
